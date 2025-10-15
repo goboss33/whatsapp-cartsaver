@@ -20,9 +20,18 @@ api_version = "2026-01"
   topics = [ "app/scopes_update" ]
   uri = "/webhooks/app/scopes_update"
 
+  # AJOUTEZ CE BLOC CI-DESSOUS
+  [[webhooks.subscriptions]]
+  topics = [ "checkouts/create" ]
+  uri = "/webhooks/checkouts/create"
+  
+  [[webhooks.subscriptions]]
+  topics = [ "checkouts/update" ]
+  uri = "/webhooks/checkouts/update"
+
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "write_products,read_orders"
 
 [auth]
 redirect_urls = [ "https://example.com/api/auth" ]

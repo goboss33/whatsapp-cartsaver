@@ -17,10 +17,14 @@ export default function App() {
 
   return (
     <AppProvider embedded apiKey={apiKey}>
-      <s-app-nav>
-        <s-link href="/app">Home</s-link>
-        <s-link href="/app/additional">Additional page</s-link>
-      </s-app-nav>
+		<s-app-nav>
+		  <s-link href="/app">Home</s-link>
+		  <s-link href="/app/dashboard">Dashboard</s-link>
+		  <s-link href="/app/whatsapp_config">WhatsApp Config</s-link>
+		  {/* ==> AJOUTEZ LA LIGNE CI-DESSOUS <== */}
+		  <s-link href="/app/settings">Paramètres</s-link> 
+		  <s-link href="/app/additional">Additional page</s-link>
+		</s-app-nav>
       <Outlet />
     </AppProvider>
   );

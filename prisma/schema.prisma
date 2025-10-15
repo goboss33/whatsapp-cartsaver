@@ -30,3 +30,33 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+model Settings {
+  id           Int    @id @default(autoincrement())
+  shop         String @unique
+  delayMinutes Int    @default(60) // Délai en minutes, 60 par défaut
+}
+
+model TwilioConfig {
+  id          Int      @id @default(autoincrement())
+  shop        String   @unique
+  accountSid  String
+  authToken   String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AbandonedCheckout {
+  id                   Int      @id @default(autoincrement())
+  checkoutId           String   @unique
+  shop                 String
+  customerName         String?
+  customerPhone        String?
+  abandonedCheckoutUrl String?
+  cartTotal            Float
+  lineItems            Json
+  status               String   @default("abandoned")
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
