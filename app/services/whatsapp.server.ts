@@ -7,8 +7,12 @@ export async function sendWhatsappRecoveryMessage({ checkoutId, shop }: { checko
   ]);
 
   if (!checkout || !twilioConfig || !checkout.customerPhone || !checkout.abandonedCheckoutUrl) {
+	console.error(`[DEBUG SEND] Impossible de trouver les informations pour le panier ${checkoutId}. URL manquante: ${!checkout.abandonedCheckoutUrl}`);
     throw new Error("Impossible de trouver le panier, le numéro, le lien ou la configuration Twilio.");
   }
+  
+  // AJOUTEZ CETTE LIGNE DE DÉBOGAGE
+  console.log(`[DEBUG SEND] Préparation de l'envoi pour le panier ${checkoutId}. URL utilisée: ${checkout.abandonedCheckoutUrl}`);
 
   if (checkout.status !== 'abandoned') {
     console.log(`Le panier ${checkoutId} n'est plus abandonné. Envoi annulé.`);

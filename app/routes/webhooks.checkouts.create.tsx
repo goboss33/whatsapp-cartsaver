@@ -1,3 +1,5 @@
+// app/routes/webhooks.checkouts.create.tsx
+
 import type { ActionFunctionArgs } from "react-router";
 import { authenticate } from "../shopify.server";
 import db from "../db.server";
@@ -11,16 +13,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   console.log(`--- Webhook ${topic} reçu pour la boutique ${shop} ---`);
 
-  const { id: checkoutId, line_items, total_price, customer, abandoned_checkout_url } = payload;
+  // On récupère le "token" du payload, qui est le checkout_token
+  const { id: checkoutId, line_items, total_price, customer, abandoned_checkout_url, token } = payload;
+
+  // AJOUTEZ CETTE LIGNE DE DÉBOGAGE
+  console.log(`[DEBUG CREATE] Checkout ${checkoutId}, URL: ${abandoned_checkout_url}`);
 
   try {
     await db.abandonedCheckout.create({
       data: {
         checkoutId: checkoutId.toString(),
+        checkoutToken: token,
         shop: shop,
         customerName: `${customer?.first_name || ''} ${customer?.last_name || ''}`.trim(),
         customerPhone: customer?.phone,
-        abandonedCheckoutUrl: abandoned_checkout_url, // <-- ON AJOUTE LE LIEN ICI
+        abandonedCheckoutUrl: abandoned_checkout_url,
         cartTotal: parseFloat(total_price),
         lineItems: line_items,
       },

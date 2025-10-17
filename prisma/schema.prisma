@@ -50,6 +50,7 @@ model TwilioConfig {
 model AbandonedCheckout {
   id                   Int      @id @default(autoincrement())
   checkoutId           String   @unique
+  checkoutToken        String?  @unique
   shop                 String
   customerName         String?
   customerPhone        String?
